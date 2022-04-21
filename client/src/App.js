@@ -2,29 +2,34 @@ import './App.css';
 import React, {useState, useEffect} from 'react';
 import io from 'socket.io-client';
 import {pack, unpack, generateKeys} from './assets/crypt.js';
+const myKeys = generateKeys();
+
+const socket = io.connect('http://127.0.0.1:5000',{transports: ['websocket']});
 
 
 function App() {
 
-  const myKeys = generateKeys();
-  const [keys, setKeys] = useState([]);
-
-  const socket = io.connect('http://127.0.0.1:5000',{transports: ['websocket']});
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [signed, setSigned] = useState(false);
+  const [serverKey, setServerKey] = useState('');
 
   useEffect(() => {
-    socket.on("message",(msg) => {
-      setMessages((messages)=>[...messages, msg]);
-    })
-    socket.on("keys",(kys) => {
-      setKeys(kys);
-    })
-  }
-  ,[socket])
+    const msgListner = (data) => {
+      const {message,time} = unpack(data, myKeys.private)
+      setMessages((messages)=>[...messages, {m:message,t:time}]);
+    }
+    const keyListner = (key) =>  setServerKey(key);
+
+    socket.on("message", msgListner)
+    socket.on('key', keyListner)
+    return ()=>{
+      socket.off("message", msgListner)
+      socket.off('key', keyListner)
+    }
+  }, [socket])
 
   const signHandler = (e)=> {
     e.preventDefault();
@@ -32,20 +37,17 @@ function App() {
     socket.emit('join',{
       name,
       room,
-      id: socket.id,
-      key:keys.public
+      key:myKeys.public,
     })
   }
 
   const sendHandler = (e)=> {
     e.preventDefault();
     const plaintext = {
-      name,
       message,
-      room,
-      id: socket.id,
+      'time': Date.now()
     }
-    socket.emit('message',plaintext);
+    socket.emit('message',pack(plaintext, serverKey));
     setMessage('');
   }
   
@@ -60,7 +62,7 @@ function App() {
       <div>
       <input placeholder='type ur message' value={message} onChange={(e)=>setMessage(e.target.value)} />
       <button onClick={sendHandler}>Send</button>
-      {messages.map((message=><p key={message}>{message}</p>))}
+      {messages.map((({m,t})=><p key={t}>{m}</p>))}
       </div>}
     </div>
   );

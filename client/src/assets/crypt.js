@@ -1,16 +1,8 @@
 import {JSEncrypt} from 'jsencrypt';
 import CryptoJS from "crypto-js";
 
-var SECURITY_LEVEL = 2048;
-
-if ((window.navigator.userAgent.indexOf('MSIE') > 0) ||
-    (window.navigator.userAgent.indexOf('Trident/7') > 0) ||
-    (window.navigator.userAgent.indexOf('Edge/') > 0)) {
-    SECURITY_LEVEL = 1024;
-}
-
 function generateKeys() {
-    const crypt = new JSEncrypt({ default_key_size: SECURITY_LEVEL });
+    const crypt = new JSEncrypt({ default_key_size: 2048 });
     crypt.getKey();
     return {
         'private': crypt.getPrivateKey(),
@@ -33,7 +25,7 @@ const pack = (data, publicKey)=>{
     encrypter.setKey(publicKey);
 
     encrypted['data'] = CryptoJS.AES.encrypt(JSON.stringify(data), aesKey).toString();
-    encrypted['aesKey'] = encrypter.encrypt(aesKey)
+    encrypted['aesKey'] = encrypter.encrypt(aesKey);
     return encrypted
 }
 
