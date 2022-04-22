@@ -25,11 +25,19 @@ const socketServer = (server) => {
                         {[socket.id]:user}:
                         {...rooms[room], [socket.id]:user};
             socket.emit('key',serverKeys.public);
+            
+            const roomUsers = rooms[room];            
+            for(let user in roomUsers){
+                io.to(user).emit('users',roomUsers);
+            }
+
+            
         });
         socket.on('message', ({data,aesKey})=>{
             const room = users[socket.id].room;
             const roomUsers = rooms[room];
             aesKey = unpack(aesKey, serverKeys.private)
+            
             for(let user in roomUsers){
                 let userKey = users[user].key
                 io.to(user).emit('message',{data, 'aesKey':pack(aesKey,userKey)})
@@ -39,6 +47,14 @@ const socketServer = (server) => {
             const room = users[socket.id]?.room;
             delete users[socket.id];
             delete rooms[room][socket.id];
+            const roomUsers = rooms[room];            
+            for(let user in roomUsers){
+                io.to(user).emit('users',roomUsers);
+            }
+        }) 
+
+        socket.on('logout',()=>{
+            socket.disconnect();
         }) 
         
     });
