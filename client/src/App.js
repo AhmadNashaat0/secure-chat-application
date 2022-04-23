@@ -15,7 +15,7 @@ function App() {
 
   
 
-  
+  const [encMessages, setEncMessages] = useState([]);
   const [signed, setSigned] = useState(false);
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
@@ -26,9 +26,14 @@ function App() {
 
   useEffect(() => {
     const msgListner = (data) => {
+      // setEncMessages((encMessages) => [...encMessages, {data: data.data, aes: data.aesKey}]);
       const {name,time,message} = unpack(data, myKeys.private)
-      setMessages((messages)=>[...messages, {m:message,t:time,n:name}])
+      setMessages((messages)=>[...messages, {m:message,t:time,n:name,e:data,k:myKeys.private}]);
     };
+
+
+
+
 
     const usersListner = (users) => {
       let temp = [];
@@ -91,12 +96,13 @@ function App() {
     }
     socket.emit('message',pack(plaintext, serverKey));
     setMessage('');
+    
   }
 
 
 
   return (
-    <AppContext.Provider value={{ socket, setSigned, name, setName, room, setRoom, messages, setMessages, message, setMessage, serverKey, setServerKey, usersList, setSigned, setUsersList }}>
+    <AppContext.Provider value={{ socket, setSigned, name, setName, room, setRoom, messages, setMessages, message, setMessage, serverKey, setServerKey, usersList, setSigned, setUsersList, encMessages }}>
       {!signed ? <Start setSigned = {setSigned} signHandler={signHandler} /> : <ChatRoom sendHandler={sendHandler}/>}
     </AppContext.Provider>
 
