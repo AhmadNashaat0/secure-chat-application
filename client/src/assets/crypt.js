@@ -19,16 +19,20 @@ function generateRandomString(length) {
     return text;
 }
 
-const pack = (data, publicKey)=>{
-    const encrypted={}, aesKey = generateRandomString(32);
-    const encrypter = new JSEncrypt();
-    encrypter.setKey(publicKey);
+const pack = (data, userKeys)=>{
+    const encrypted={'aesKey':{}}; 
+    const aesKey = generateRandomString(32);
 
     encrypted['data'] = CryptoJS.AES.encrypt(JSON.stringify(data), aesKey).toString();
-    encrypted['aesKey'] = encrypter.encrypt(aesKey);
+
+    for(let key in userKeys){
+        const encrypter = new JSEncrypt();
+        encrypter.setKey(userKeys[key]);
+        encrypted['aesKey'][key] = encrypter.encrypt(aesKey);
+
+    }
     return encrypted
 }
-
 const unpack = (data, privateKey)=>{
     const decrypter = new JSEncrypt();
     decrypter.setKey(privateKey);

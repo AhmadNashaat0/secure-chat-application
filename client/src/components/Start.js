@@ -3,10 +3,7 @@ import { AppContext } from "../App";
 import '../styles/Start.css';
 
 export default function Start({signHandler}) {
-
-
     const {name, setName, room, setRoom} = useContext(AppContext);
-
     return (
         <div className="start-container">
             <h1>Secure <span> Chat Rooms </span></h1>

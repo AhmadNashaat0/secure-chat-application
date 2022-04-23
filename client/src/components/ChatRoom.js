@@ -5,24 +5,45 @@ import { AppContext } from "../App";
 import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 
+const formatAMPM = (date) => {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+}
 
 
+export default function ChatRoom() {
 
-export default function ChatRoom({sendHandler}) {
-
-    const {name, room, message, setMessage, messages, usersList, setSigned, socket} = useContext(AppContext);
+    const {name, room, message, setMessage, messages,  
+           setSigned, socket, usersKeys, pack, usersList
+          } = useContext(AppContext);
+          
     const [expand, setExpand] = useState(false);
 
     const handleLeave = () => {
         setSigned(false);
         socket.emit('logout');
     }
-
     const handleExpand = (e) => {
         e.preventDefault();
         setExpand(!expand);
         
     }
+    const sendHandler = (e)=> {
+        e.preventDefault();
+        const plaintext = {
+          name,
+          'time': formatAMPM(new Date()),
+          message
+        }
+        socket.emit('message',pack(plaintext, usersKeys));
+        setMessage('');
+      }
 
     return (
         <div className="chat-room-container">
