@@ -2,8 +2,6 @@ import React, {useContext, useState} from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import '../styles/ChatRoom.css';
 import { AppContext } from "../App";
-import {Tooltip} from 'react-tippy';
-import 'react-tippy/dist/tippy.css';
 
 const formatAMPM = (date) => {
     let hours = date.getHours();
@@ -73,9 +71,9 @@ export default function ChatRoom() {
                                 </div>
                                 <div className="message-text">{m}</div>
                                 {expand && <div className="enc-data" >
-                                    <div><span>RSA key: <br /></span>{e.data}</div>
-                                    <div><span>AES key: <br /></span>{e.aesKey}</div>
-                                    <div><span>RSA key: <br /></span>{k.replace('-----BEGIN RSA PRIVATE KEY-----', '').replace('-----END RSA PRIVATE KEY-----', '')}</div>
+                                    <div><span>Encrypted message: <br /></span>{e.data}</div>
+                                    {/* <div><span>AES key: <br /></span>{e.aesKey}</div>
+                                    <div><span>Private RSA key: <br /></span>{k.replace('-----BEGIN RSA PRIVATE KEY-----', '').replace('-----END RSA PRIVATE KEY-----', '')}</div> */}
                                 </div>}
                             </div>
                         )}

@@ -22,9 +22,7 @@ function generateRandomString(length) {
 const pack = (data, userKeys)=>{
     const encrypted={'aesKey':{}}; 
     const aesKey = generateRandomString(32);
-
-    encrypted['data'] = CryptoJS.AES.encrypt(JSON.stringify(data), aesKey, {mode: CryptoJS.mode.CTR}).toString();
-
+    encrypted['data'] = CryptoJS.AES.encrypt(JSON.stringify(data), aesKey).toString();
     for(let key in userKeys){
         const encrypter = new JSEncrypt();
         encrypter.setKey(userKeys[key]);
@@ -36,12 +34,8 @@ const pack = (data, userKeys)=>{
 const unpack = (data, privateKey)=>{
     const decrypter = new JSEncrypt();
     decrypter.setKey(privateKey);
-
     const aesKey = decrypter.decrypt(data.aesKey);
-    var bytes = CryptoJS.AES.decrypt(data.data, aesKey,{
-        mode: CryptoJS.mode.CTR
-    });
-    
+    var bytes = CryptoJS.AES.decrypt(data.data, aesKey);
     var decrypted =  JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     return decrypted
 }

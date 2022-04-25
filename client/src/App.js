@@ -3,7 +3,7 @@ import React, {useState, useEffect, createContext} from 'react';
 import Start from './components/Start.js';
 import ChatRoom from './components/ChatRoom.js';
 import io from 'socket.io-client';
-import {pack, unpack, generateKeys} from './assets/crypt.js';
+import {pack, unpack, generateKeys} from './services/crypt.js';
 
 const myKeys = generateKeys();
 let socket = io.connect('http://127.0.0.1:5000',{transports: ['websocket']});
@@ -11,7 +11,6 @@ export const AppContext = createContext(null);
 
 function App() {
 
-  const [encMessages, setEncMessages] = useState([]);
   const [signed, setSigned] = useState(false);
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
@@ -59,9 +58,10 @@ function App() {
       key:myKeys.public,
     }) 
   }
+
   const value = { socket, setSigned, name, setName, room, setRoom, io,
                 messages, setMessages, message, setMessage, usersKeys,
-                usersList, setUsersList, encMessages, pack, myKeys
+                usersList, setUsersList, pack, myKeys
                 }
 
   return (
