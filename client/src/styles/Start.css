@@ -1,0 +1,58 @@
+.start-container{
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    font-size: 4rem;
+    font-weight: medium;
+    
+    color: #000;
+    text-transform: uppercase;
+    text-align: center;
+    
+}
+
+h1 span{
+    font-size: 1.5rem;
+    font-weight: lighter;
+    display: block;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+input{
+    border: 2px solid #000;
+    background-color: #d6bdb6;
+    outline: none;
+    width: 400px;
+    height: 40px;
+    margin: 6px;
+    padding: 0px 8px;
+    font-size: 1rem;
+    -moz-appearance: textfield;
+}
+
+button{
+    font-size: 1rem;
+    border: 2px solid #000;
+    background-color: #d6bdb6;
+    margin: 6px;
+    height: 40px;
+
+}
+
+button:hover{
+    border: none;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+}
