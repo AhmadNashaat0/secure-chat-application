@@ -1,129 +1,131 @@
-.chat-room-container{
-    background-color: #ffe1d8;
-    overflow: hidden;
+.chat-room{
+    background-color: #d6bdb6;
     height: 100vh;
-    display: grid;
-    grid-template-columns: 2.5fr 7.5fr;
-    grid-auto-rows: 100vh;
-    grid-gap: 20px;
+    padding: 30px;
+}
+
+.chat-room-container{
+    border: 3px solid black;
+    height: 100%;
+    display: flex;
 }
 
 .chat-room-controls{
-    margin: 20px 0px 20px 20px;
-    border: 2px solid #000;
-    display: grid;
-    grid-template-rows: .8fr 8.5fr .7fr;
-    grid-auto-columns: 100%;
+    border-right: 3px solid #000;
+    display: flex;
+    width: 15%;
+    flex-direction: column;
+    justify-content: space-between;
     text-align: center;
 }
 
 .room-number{
-    border-style: solid;
-    border-width: 0 0 2px 0;
-    border-color: #000;
+    border-bottom: 3px solid #272727;
+    background-color: #2B50AA;
+    color: #fff;
     display: flex;
     justify-content: space-between;
     padding: 20px;
     align-items: center;
-    font-size: large;
-    font-weight: bold;
-    
+    font-size: 1.6rem;
+    font-weight: 600;
+    height: 10%;
 }
 
+.expand:hover{
+    cursor: pointer;
+ }
 
 .room-members{
+    height: 80%;
     display: flex;
     flex-direction: column;
 }
 
 .room-member{
-    border-style: solid;
-    border-width: 0 0 2px 0;
-    border-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #e5c9c1 ;
-    height: 60px;
-    width: 100%;
-    font-size: large;
-    font-weight: bold;
+    border-bottom: 3px solid #272727;
+    padding: 10px 0;
+    font-size: 1.6rem;
+}
+
+.room-number i{
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #2B50AA;
+    background-color: #fff;
 }
 
 .leave-room{
-    background-color: #000;
+    height: 10%;
+    background-color: #2B50AA;
+    border-top: 3px solid #272727;
     color: #fff;
     display: flex;
+    font-size: 1.6rem;
+    font-weight: 600;
     justify-content: center;
     align-items: center;
 }
+
 .leave-room:hover{
-    background-color: #e5c9c1;
-    color: #000;
+    background-color: #272727;
     cursor: pointer;
 }
+
 .leave-room i{
-    padding: 0px 5px;
+    margin: 0px 10px;
+    font-weight: 600;
+    color: #fff;
 }
 
-
 .chat-room-messages{
-    background-color:#ffe1d8 ; 
-    margin: 20px 20px 20px 0px;
-    border: 2px solid #000;
-    display: grid;
-    grid-template-rows: 9.3fr .7fr;
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    height: 100%;
 }
 
 .messages-area{
     overflow: auto;
     scroll-behavior: smooth;
-    scrollbar-color: #000 #e5c9c1;
+    scrollbar-color: #272727 #e5c9c1;
     display: flex;
     flex-direction: column;
+    height: 90%;
 }
 
 .message{
-    border: 2px solid #000;
-    width: 60%;
-    margin: 10px;
+    max-width: 40%;
+    margin:30px;
+    box-shadow: -7px 7px #272727;
 }
 
 .sender{  
     margin-left: auto;
+    box-shadow: 7px 7px #272727;
+}
+
+.sender .message-meta{
+    background-color: #2B50AA ;
 }
 
 .message-meta{
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 10px;
-    background-color: #000;
+    background-color: #94BFA7;
     font-size: small;
+}
+
+.message-meta span{
     color: #fff;
-}
-
-.expand{
-    background-color: #000;
-    color:#ffe1d8
-}
-
-.expand:hover{
-   cursor: pointer;
-}
-
-.message-sender{
-    font-weight: bold;
-}
-
-.message-time{
-    color: #fff;
-    margin-left: 20px;
 }
 
 .enc-data{
-    border-top: 2px solid #000;
-    background-color: #e5c9c1;
-    padding: 5px
+    padding: 10px;
+    margin-bottom: 20px;
+    border-top: 3px solid #272727;
+    background-color:#ffe1d8;
 }
 
 .enc-data div{
@@ -138,39 +140,38 @@
 
 .message-text{
     padding: 10px;
+    font-size: 1.2rem;
     background-color:#ffe1d8;
 }
 
 
 .send-message-area{
-    border-top: 2px solid #000;
-    display: grid;
-    grid-template-columns: 8fr 2fr;
+    border-top: 3px solid #272727;
+    display: flex;
+    height: 10%;
 }
 
-
-
 .send-message-area button{
-    font-size: 1rem;
-    background-color: #000;
+    font-size: 1.6rem;
+    border: none;
+    border-left: 3px solid #272727;
+    background-color: #2B50AA;
+    font-weight: 600;
+    width: 15%;
     color: #fff;
-    margin: 0;
-    height: auto;
 }
 
 .send-message-area button:hover{
-    border-left: 2px solid #000;
-    background-color: #ffe1d8;
-    color: #000;
+    
+    background-color: #272727;
     cursor: pointer;
 }
 
 .send-message-area input{
-    width: auto;
-    height: auto;
-    margin: 0;
-    background-color: #ffe1d8;
+    width: 85%;
+    padding-left: 20px;
+    font-size: 1.6rem;
+    background-color: transparent;
     border: none;
     outline: none;
-    font-size: 1rem;
 }
