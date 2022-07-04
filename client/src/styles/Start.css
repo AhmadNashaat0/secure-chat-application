@@ -1,5 +1,4 @@
 .start-container{
-    overflow: hidden;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -8,51 +7,54 @@
 }
 
 h1{
-    font-size: 4rem;
-    font-weight: medium;
-    
-    color: #000;
+    font-size: 5rem;
+    font-weight: 700;
     text-transform: uppercase;
     text-align: center;
-    
 }
 
 h1 span{
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: lighter;
     display: block;
+    margin-bottom: 20px;
 }
 
-form {
+.submit-form {
+    height: 25%;
+    width: 50vw;
     display: flex;
     flex-direction: column;
-    
+    justify-content: space-around;
+}
+
+.submit-form > * {
+    width: 50%;
+    height: 50px;
+    margin: 6px auto;
+    border: 3px solid #000;
+    background-color: transparent;
+    font-size: 1.2rem;
 }
 
 input{
-    border: 2px solid #000;
-    background-color: #d6bdb6;
     outline: none;
-    width: 400px;
-    height: 40px;
-    margin: 6px;
     padding: 0px 8px;
-    font-size: 1rem;
     -moz-appearance: textfield;
+    
+}
+
+input:focus{
+    box-shadow: 7px 7px #000;
+    transition: 0.2s all ease-in-out;
 }
 
 button{
-    font-size: 1rem;
-    border: 2px solid #000;
-    background-color: #d6bdb6;
-    margin: 6px;
-    height: 40px;
-
+    
 }
 
 button:hover{
-    border: none;
-    background-color: #000;
-    color: #fff;
     cursor: pointer;
+    box-shadow: 7px 7px #000;
+    transition: 0.2s all ease-in-out;
 }
