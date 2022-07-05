@@ -52,70 +52,76 @@ export default function ChatRoom() {
   return (
     <div className="chat-room">
       <div className="chat-room-container">
-        <div className="chat-room-controls">
-          <div className="room-number">
-            ROOM {room}
-            {expand ? (
-              <i className="material-icons expand" onClick={handleExpand}>
-                keyboard_arrow_up
-              </i>
-            ) : (
-              <i className="material-icons expand" onClick={handleExpand}>
-                keyboard_arrow_down
-              </i>
-            )}
-          </div>
-          <div className="room-members">
-            {usersList.map((user) => (
-              <div key={user} className="room-member">
-                {user}
-              </div>
-            ))}
-          </div>
-          <div className="leave-room" onClick={handleLeave}>
-            Logout
-            <i className="material-icons">logout</i>
-          </div>
+        <div className="room-number">
+          ROOM {room}
+          {expand ? (
+            <i className="material-icons expand" onClick={handleExpand}>
+              keyboard_arrow_up
+            </i>
+          ) : (
+            <i className="material-icons expand" onClick={handleExpand}>
+              keyboard_arrow_down
+            </i>
+          )}
         </div>
-
-        <div className="chat-room-messages">
-          <ScrollToBottom className="messages-area">
-            {messages.map(({ m, t, n, e, k }) => (
-              <div
-                key={Math.random()}
-                className={n === name ? "message sender" : "message"}
-              >
-                <div className="message-meta">
-                  <span className="message-sender">{n}</span>
-                  <span className="message-time">{t}</span>
+        <div className="chat-container">
+          <div className="chat-room-controls">
+            <div className="room-members">
+              <div className="members-header">Members list</div>
+              {usersList.map((user) => (
+                <div key={user} className="room-member">
+                  {user}
                 </div>
-                <div className="message-text">{m}</div>
-                {expand && (
-                  <div className="enc-data">
-                    <div>
-                      <span>
-                        Encrypted message: <br />
-                      </span>
-                      {e.data}
-                    </div>
-                    {/* <div><span>AES key: <br /></span>{e.aesKey}</div>
-                                    <div><span>Private RSA key: <br /></span>{k.replace('-----BEGIN RSA PRIVATE KEY-----', '').replace('-----END RSA PRIVATE KEY-----', '')}</div> */}
+              ))}
+            </div>
+            <div className="leave-room" onClick={handleLeave}>
+              <span>Logout</span>
+              <i className="material-icons">logout</i>
+            </div>
+          </div>
+
+          <div className="chat-room-messages">
+            <ScrollToBottom className="messages-area">
+              {messages.map(({ m, t, n, e, k }) => (
+                <div
+                  key={Math.random()}
+                  className={n === name ? "message sender" : "message"}
+                >
+                  <div className="message-meta">
+                    <span className="message-sender">{n}</span>
+                    <span className="message-time">{t}</span>
                   </div>
-                )}
-              </div>
-            ))}
-          </ScrollToBottom>
-          <div className="send-message-area">
-            <input
-              type="text"
-              placeholder="Type your message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyPress={(e) => {
-                e.key === "Enter" && sendHandler(e);
-              }}
-            ></input>
-            <button onClick={sendHandler}>Send</button>
+                  <div className="message-text">{m}</div>
+                  {expand && (
+                    <div className="enc-data">
+                      <div>
+                        <span>
+                          Encrypted message: <br />
+                        </span>
+                        {e.data}
+                      </div>
+                      {/* <div><span>AES key: <br /></span>{e.aesKey}</div>
+                                    <div><span>Private RSA key: <br /></span>{k.replace('-----BEGIN RSA PRIVATE KEY-----', '').replace('-----END RSA PRIVATE KEY-----', '')}</div> */}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </ScrollToBottom>
+            <div className="send-message-area">
+              <input
+                type="text"
+                placeholder="Type your message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyPress={(e) => {
+                  e.key === "Enter" && sendHandler(e);
+                }}
+              ></input>
+              <button onClick={sendHandler}>
+                <span>Send</span>
+                <i className="material-icons">send</i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
